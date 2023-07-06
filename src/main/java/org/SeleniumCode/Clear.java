@@ -23,8 +23,6 @@ public class Clear {
         By listOfAllFlightRates = By.xpath("(//div[@id='container']//div[contains(@class,'_1YokD2 _3Mn1Gg col-9-12')]//div[@class='row']//div[@class='col-12-12'][last()])/div//div[@class='_3uUoiD']");
         getChepeastFlightRate(listOfAllFlightRates);
     }
-
-
     private static  void getChepeastFlightRate(By listOfAllFlightRatesInFlipkart) {
 
         List<WebElement> listOfAllFlight = driver.findElements(listOfAllFlightRatesInFlipkart);
