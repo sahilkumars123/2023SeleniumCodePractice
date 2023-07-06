@@ -25,7 +25,6 @@ public class ActionsMethodChaining {
         Actions actions = new Actions(driver);
 
         WebElement firstName = driver.findElement(By.id("input-firstname"));
-
         actions.sendKeys(firstName, "sahil")
                 .sendKeys(Keys.TAB)
                 .pause(1000)

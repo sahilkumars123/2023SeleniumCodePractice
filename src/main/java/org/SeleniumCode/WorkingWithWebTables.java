@@ -3,6 +3,8 @@ package org.SeleniumCode;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class WorkingWithWebTables {
         clickCheckbox("Jordan.Mathews");
         clickCheckbox("Joe.Root");
         System.out.println(getEmployeeInfo("Joe.Root"));
+
     }
 
     public static void clickCheckbox(String empName){
@@ -41,5 +44,6 @@ public class WorkingWithWebTables {
       }
             return actualEmployeeInfo;
     }
+
 }
 
