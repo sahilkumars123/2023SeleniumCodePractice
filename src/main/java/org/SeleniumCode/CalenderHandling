@@ -1,0 +1,83 @@
+package org.SeleniumCode;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.time.Duration;
+import java.util.List;
+
+public class CalenderHandling {
+
+    static WebDriver driver;
+    public static void main(String[] args) {
+
+        System.setProperty("webdriver.chrome.driver", "/Users/sahil.kumar/Documents/drivers/chromedriver");
+
+        BrowserUtil brUtil = new BrowserUtil();
+        driver = brUtil.intializeBrowser("chrome");
+        brUtil.launchURL("http://seleniumpractise.blogspot.com/2016/08/how-to-handle-calendar-in-selenium.html");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
+        driver.findElement(By.id("datepicker")).click();
+
+        selectFutureDate("April 2024","28");
+
+
+        //doSelect("23");
+        //selectDayByTakingList("25");
+
+
+    }
+
+    public static void selectFutureDate(String expectedMonYear, String expectedDay){
+
+        if(expectedMonYear.contains("Februry") && Integer.parseInt(expectedDay) > 29){
+            System.out.println("please enter the valid date...");
+            return;
+        }
+
+        //6(April,June,Sep,nov) -30 +5(Jan,March,may,July,Aug,Dec) - 31
+
+        if((expectedMonYear.contains("April")) || expectedMonYear.contains("June") || expectedMonYear.contains("September") || expectedDay.contains("November")){
+            if((Integer.parseInt(expectedDay) > 31)){
+                System.out.println("in these month 31 or more than 31 date is not allowed");
+                return;
+            }
+        }
+        if((expectedMonYear.contains("January")) || expectedMonYear.contains("March") || expectedMonYear.contains("May") || expectedDay.contains("July")|| expectedDay.contains("August")|| expectedDay.contains("December")){
+            if((Integer.parseInt(expectedDay) > 32)){
+                System.out.println("in these month 31 date is not allowed");
+                return;
+            }
+        }
+
+        String actualDay = driver.findElement(By.cssSelector("div.ui-datepicker-title")).getText();
+
+        while(!actualDay.equalsIgnoreCase(expectedMonYear)){
+            driver.findElement(By.xpath("//span[text()='Next']")).click();
+            actualDay = driver.findElement(By.cssSelector("div.ui-datepicker-title")).getText();
+        }
+
+        doSelect(expectedDay);
+
+    }
+
+
+
+    public static void selectDayByTakingList(String day){
+
+        List<WebElement> listOfAllDates = driver.findElements(By.xpath("//table[@class='ui-datepicker-calendar']//td[contains(@data-year,'2023')]"));
+        for(WebElement e: listOfAllDates){
+                 String text = e.getText();
+                 if(text.equals(day)){
+                     e.click();
+                     break;
+                 }
+        }
+    }
+
+    public static void doSelect(String day){
+        driver.findElement(By.xpath("//a[text()='"+day+"']")).click();
+    }
+}
